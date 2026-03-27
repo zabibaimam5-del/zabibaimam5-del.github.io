@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Brain Upgrade</title>
+</head>
+
+<body style="text-align:center;font-family:Arial;">
+
+<h1>🧠 Brain Upgrade</h1>
+
+<p id="q"></p>
+<input id="a">
+<button onclick="c()">Submit</button>
+
+<p id="r"></p>
+
+<script>
+let ans=0;
+
+function n(){
+let x=Math.floor(Math.random()*10)+1;
+let y=Math.floor(Math.random()*10)+1;
+ans=x+y;
+document.getElementById("q").innerText=x+" + "+y;
+}
+
+function c(){
+let v=document.getElementById("a").value;
+if(Number(v)===ans){
+document.getElementById("r").innerText="✅ Correct";
+}else{
+document.getElementById("r").innerText="❌ "+ans;
+}
+n();
+}
+
+n();
+</script>
+
+</body>
+</html>
