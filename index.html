@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>🧠 Brain Upgrade PRO</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:#0f2027;
+color:white;
+text-align:center;
+}
+
+.card{
+margin-top:40px;
+padding:25px;
+width:350px;
+background:#1c2b36;
+border-radius:20px;
+display:inline-block;
+}
+
+input,button{
+padding:12px;
+margin:8px;
+border-radius:10px;
+border:none;
+font-size:16px;
+}
+
+button{
+background:#00f7ff;
+color:black;
+font-weight:bold;
+cursor:pointer;
+}
+
+#question{
+font-size:28px;
+margin:15px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🧠 Brain Upgrade PRO</h1>
+
+<div class="card">
+
+<!-- LOGIN -->
+<div id="login">
+<input id="username" placeholder="Enter your name"><br>
+<button onclick="start()">Start Game</button>
+</div>
+
+<!-- GAME -->
+<div id="game" style="display:none;">
+
+<p id="stats"></p>
+
+<h2 id="question"></h2>
+
+<input id="answer" placeholder="Your answer"><br>
+<button onclick="check()">Submit</button>
+
+<p id="result"></p>
+
+</div>
+
+</div>
+
+<script>
+let user="";
+let score=0, level=1, lives=3;
+let correctAnswer=0;
+let locked=false;
+
+// START
+function start(){
+user=document.getElementById("username").value.trim();
+
+if(!user){
+alert("Enter your name!");
+return;
+}
+
+document.getElementById("login").style.display="none";
+document.getElementById("game").style.display="block";
+
+updateUI();
+ask();
+}
+
+// RANDOM
+function rand(a,b){
+return Math.floor(Math.random()*(b-a+1))+a;
+}
+
+// ASK QUESTION
+function ask(){
+locked=false;
+
+let x=rand(1,10+level*2);
+let y=rand(1,10+level*2);
+
+correctAnswer=x+y;
+
+document.getElementById("question").innerText=x+" + "+y;
+document.getElementById("answer").value="";
+document.getElementById("result").innerText="";
+}
+
+// CHECK ANSWER
+function check(){
+if(locked) return;
+
+let ans=document.getElementById("answer").value.trim();
+if(ans==="") return alert("Enter answer!");
+
+locked=true;
+
+if(Number(ans)===correctAnswer){
+score++;
+if(score%5===0) level++;
+document.getElementById("result").innerText="✅ Correct";
+}else{
+lives--;
+document.getElementById("result").innerText="❌ "+correctAnswer;
+}
+
+if(lives<=0){
+alert("Game Over");
+score=0; level=1; lives=3;
+}
+
+updateUI();
+setTimeout(()=>ask(),700);
+}
+
+// UPDATE UI
+function updateUI(){
+document.getElementById("stats").innerText=
+"👤 "+user+
+" | 🏆 Level "+level+
+" | ❤️ "+lives+
+" | Score "+score;
+}
+</script>
+
+</body>
+</html>
